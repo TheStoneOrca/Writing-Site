@@ -1,0 +1,47 @@
+#WritingArea {
+    resize: none;
+    height: 600px;    
+    width: 400px;
+}
+#SaveBar {
+    position: absolute;
+}
+.SaveBars{
+    background-color: whitesmoke;
+    display: none;
+}
+#SaveBar Button {
+    background: none;
+    border: none;
+}
+#SaveBar Button:hover{
+    background-color: whitesmoke;
+}
+.Saved {
+    border-radius: 25px;
+    background-color: whitesmoke;
+    width: 600px;
+    height: 600px;
+    box-shadow: 15px;
+    left: 475px;
+    position: absolute;
+    z-index: 2;
+    display: none;
+}
+a{
+    border-radius: 25px;
+    text-decoration: none;
+    background-color: whitesmoke;
+}
+a:hover{
+    text-decoration: none;
+    background-color: white;
+}
+.New {
+    position: absolute;
+    display: none;
+}
+
+.opened{
+    display: block;
+}

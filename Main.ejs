@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create</title>
+    <link rel="stylesheet" href="/MainPage.css">
+</head>
+<body>
+    <script>
+        function SaveDocs() {
+            localStorage.setItem("Documents", document.querySelector("ul").innerHTML)
+        }
+        function GetDocs() {
+            document.querySelector("ul").innerHTML = localStorage.getItem("Documents")
+        }
+        window.addEventListener("load", () => {
+            GetDocs()
+        })
+    </script>
+    <h1>
+        <% if (locals.Documents) { %>
+            Check out your documents!
+        <% } else { %>
+            Create A Document!
+        <% } %>
+        
+    </h1>
+    <script>
+        function CreateDoc() {
+            document.getElementById("DocCreator").classList.toggle("open")
+        }
+    </script>
+    <button onclick="CreateDoc()">Create Document</button>
+    <div id="DocCreator" class="DocsCreate">
+        <form action="/create" method="post">
+            <input type="text" name="Name">
+            <input type="submit">
+        </form>
+    </div>
+        <h2>Documents</h2>
+        <ul id="Documents" style="list-style: none;">
+            <% if (locals.Documents) { %>
+                <% for (let i = 0; i < Documents.length; i++) { %>
+                    <a href="/documents/ID=<%=i %>"><%= Documents[i] %></a>
+                    <script>SaveDocs()</script>
+                <% } %>    
+            <% } else { %>
+               
+            <% } %>
+        </ul>
+        
+       <script src="Main.js"></script>
+</body>
+</html>

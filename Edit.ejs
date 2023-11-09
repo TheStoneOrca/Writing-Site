@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/EditingPage.css">
+</head>
+<body>
+    <h1>Welcome To Document <%=DocID %></h1>
+    <textarea oninput="TitleChange()" style="resize: none;"></textarea>
+    <div id="SaveBar">
+        <button onclick="window.location.href='/'" style="text-decoration: none; color: inherit;">Home</button>
+        <button onclick="OpenSave()" style="text-decoration: none; color: inherit;">File</button>
+        <div class="SaveBars" id="SaveStuff">
+            <a onclick="SetLocalStorage()">Save</a>
+            <a onclick="OpenSaveMenu()">Saves</a>
+            <a onclick="OpenNew()">New</a>
+            <div class="New" id="NewForm">
+                <form action="/create" method="post">
+                    <input type="text" name="Name">
+                    <input type="submit">
+                </form>
+            </div>
+            <form action="/documents/ID=<%=DocID %>/delete" method="post">
+                <input type="submit">
+            </form>
+            
+            
+        </div>
+    </div>
+    <div id="Saves" class="Saved">
+        <center><ul id="SavedList"></ul></center>
+    </div>
+    <script>
+         document.getElementById("Saves").innerHTML = localStorage.getItem("Documents")
+    </script>
+    <script>
+        function TitleSave() {
+            localStorage.setItem("title<%= DocID %>", document.querySelector("textarea").value);
+        }
+        function LoadTitle() {
+            if (localStorage.getItem("title<%= DocID %>") ) {
+                if (localStorage.getItem("title<%= DocID %>") != null || localStorage.getItem("title<%= DocID %>") != "") {
+                    document.querySelector("h1").innerHTML = "Welcome To " + localStorage.getItem("title<%= DocID %>")
+                } else {
+                    document.querySelector("h1").innerHTML = "Welcome To Document <%=DocID %>"
+            }}
+                
+                
+        }
+        function TitleChange() {
+            document.querySelector("h1").innerHTML = "Welcome to " + document.querySelector("textarea").value
+            TitleSave()
+        }
+        window.addEventListener("load",() => {
+            LoadTitle()
+        })   
+    </script>
+
+    <center><textarea id="WritingArea"></textarea></center>
+    <script>
+        function SetLocalStorage() {
+            localStorage.setItem("document_<%= DocID %>", document.getElementById("WritingArea").value);
+            if (document.getElementById("SaveStuff").classList.contains("opened")) {
+                document.getElementById("SaveStuff").classList.remove("opened")
+            }
+        }
+        function GetLocalStorage() {
+            let text = localStorage.getItem("document_<%= DocID %>")
+            document.getElementById("WritingArea").innerHTML = text
+        }
+        function WipeLocalStorage() {
+            localStorage.setItem("document_<%= DocID %>", "");
+        }
+        window.addEventListener("load", () => {
+            GetLocalStorage()
+        })
+        window.addEventListener("keydown", (e) => {
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                SetLocalStorage()
+            }
+        })
+    </script>
+    <button onclick="WipeLocalStorage()">Wipe Document</button>
+    
+    
+    <script src="/EditingPage.js"></script>
+</body>
+</html>
